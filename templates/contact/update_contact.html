@@ -1,0 +1,74 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+  {{title}}
+{% endblock %}
+
+{% block content %}
+  <div class="container mt-4">
+    <h3>{{title}}</h3>
+    <hr>
+    
+    <div class="card mt-3 mb-4">
+      <div class="card-header bg-success text-center text-light">
+        <h4>{{title}}</h4>
+      </div>
+      <div class="card-body">
+        <form method="post" novalidate>
+          {% csrf_token %}
+
+          <div class="mb-3">
+            <label class="form-label">{{form.firstname.label_tag}}</label>
+            {% if form.errors %}
+            {{form.firstname}}
+            <div class="text-danger">
+              {% for error in form.firstname.errors %}
+                <span>{{error}}</span>
+              {% endfor %}
+            </div>
+            
+            {% else %}
+            {{form.firstname}}
+            {% endif %}
+            
+            
+          </div>
+          <div class="mb-3">
+            <label class="form-label">{{form.lastname.label_tag}}</label>
+            {{form.lastname}}
+            <div class="text-danger">
+              {% for error in form.lastname.errors %}
+                  <span>{{error}}</span>
+              {% endfor %}
+              
+            </div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">{{form.company.label_tag}}</label>
+            {{form.company}}
+            <div class="text-danger">
+              {% for error in form.company.errors %}
+                  <span>{{error}}</span>
+              {% endfor %}
+              
+            </div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">{{form.mobile.label_tag}}</label>
+            {{form.mobile}}
+            <div class="text-danger">
+              {% for error in form.mobile.errors %}
+                  <span>{{error}}</span>
+              {% endfor %}
+              
+            </div>
+          </div>
+          <div class="mb-3 text-center mt-5">
+            <button type="submit" class="btn btn-outline-primary"><i class="bi bi-pencil-square"></i> Update Contact</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    
+  </div>
+{% endblock %}

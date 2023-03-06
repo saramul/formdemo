@@ -1,0 +1,45 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+  {{title}}
+{% endblock %}
+
+{% block content %}
+  <div class="container mt-4">
+    <h3>{{title}}</h3>
+    <hr>
+    <div class="card mb-4">
+      <div class="card-header bg-success text-center text-light">
+        <h4>{{title}}</h4>
+      </div>
+      <div class="card-body">
+        <form method="post" novalidate>
+          {% csrf_token %}
+          {% for field in form %}
+          <div class="mb-3">
+            <label class="form-label">{{field.label}}</label>
+            {% if field.errors %}
+            <div class="form-control">{{field}}</div>
+            
+            <div class="text-danger">
+              {% for error in field.errors %}
+                <span>{{error}}</span>
+              {% endfor %}
+            </div>
+            {% else %}
+            {{field}}
+            {% endif %}
+            
+            </div>
+          {% endfor %}
+          
+          
+          <div class="mb-3 mt-4 text-center">
+            <button type="submit" class="btn btn-outline-success">{{title}}</button>
+          </div>
+          
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}

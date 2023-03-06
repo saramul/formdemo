@@ -1,0 +1,51 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+  {{title}}
+{% endblock %}
+
+{% block content %}
+  <div class="container mt-4">
+    <h3>{{title}}</h3>
+    <hr>
+    <div class="row">
+      <div class="col-12">
+        <a href="{% url 'personapp:new_person' %}" class="btn btn-outline-success float-end">Add New Person</a>
+      </div>
+    </div>
+    <div class="table-responsive mt-4">
+      <div class="card">
+        <div class="card-header bg-success text-center text-light">
+          <h4>{{title}}</h4>
+        </div>
+        <div class="card-body">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Firstname</th>
+                <th>Lastname</th>
+                <th>Email</th>
+                <th>Mobile Phone</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            {% for person in persons %}
+              <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{person.firstname}}</td>
+                <td>{{person.lastname}}</td>
+                <td>{{person.email}}</td>
+                <td>{{person.phone}}</td>
+                <td>
+                  <a href="{% url 'personapp:update_person' id=person.id %}" class="btn btn-outline-success btn-sm">update</a>
+                </td>
+              </tr>
+            {% endfor %}
+            
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
