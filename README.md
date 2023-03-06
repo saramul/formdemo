@@ -1,5 +1,5 @@
 # formdemo with django
-## contents
+## python code
 ### models
 ```
 from django.db import models
@@ -126,3 +126,215 @@ urlpatterns = [
     path('<int:id>/delete_contact/', views.delete_contact, name='delete_contact'),
 ]
   ```
+## templates
+### show_all
+```
+{% extends 'layout.html' %}
+
+{% block title %}
+  {{title}}
+{% endblock %}
+
+{% block content %}
+  <div class="container mt-4">
+    <h3>{{title}}</h3>
+    <hr>
+    <div class="row">
+      <div class="col-12">
+        <a href="{% url 'contactapp:new_contact' %}" class="btn btn-outline-success float-end"><i class="bi bi-person-add"></i> Add New Contact</a>
+      </div>
+    </div>
+    <div class="table-responsive mt-4">
+      <div class="card">
+        <div class="card-header bg-success text-center text-light">
+          <h4>{{title}}</h4>
+        </div>
+        <div class="card-body">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Firstname</th>
+                <th>Lastname</th>
+                <th>Company</th>
+                <th>Mobile Phone</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            {% for contact in contacts %}
+              <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{contact.firstname}}</td>
+                <td>{{contact.lastname}}</td>
+                <td>{{contact.company}}</td>
+                <td>{{contact.mobile}}</td>
+                <td>
+                  <a href="{% url 'contactapp:update_contact' id=contact.id %}" class="btn btn-outline-success btn-sm"><i class="bi bi-person-check"></i></a>
+                  <a onclick="return confirm('Are you sure to delete this contact?')" href="{% url 'contactapp:delete_contact' id=contact.id %}" class="btn btn-outline-danger btn-sm"><i class="bi bi-person-x"></i></a>
+                </td>
+              </tr>
+            {% endfor %}
+            
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+```
+### new_contact
+```
+{% extends 'layout.html' %}
+
+{% block title %}
+  {{title}}
+{% endblock %}
+
+{% block content %}
+  <div class="container mt-4">
+    <h3>{{title}}</h3>
+    <hr>
+    
+    <div class="card mt-3 mb-4">
+      <div class="card-header bg-success text-center text-light">
+        <h4>{{title}}</h4>
+      </div>
+      <div class="card-body">
+        <form method="post" novalidate>
+          {% csrf_token %}
+
+          <div class="mb-3">
+            <label class="form-label">{{form.firstname.label}}</label>
+            {% if form.errors %}
+            {{form.firstname}}
+            <div class="text-danger">
+              {% for error in form.firstname.errors %}
+                <span>{{error}}</span>
+              {% endfor %}
+            </div>
+            
+            {% else %}
+            {{form.firstname}}
+            {% endif %}
+            
+            
+          </div>
+          <div class="mb-3">
+            <label class="form-label">{{form.lastname.label}}</label>
+            {{form.lastname}}
+            <div class="text-danger">
+              {% for error in form.lastname.errors %}
+                  <span>{{error}}</span>
+              {% endfor %}
+              
+            </div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">{{form.company.label}}</label>
+            {{form.company}}
+            <div class="text-danger">
+              {% for error in form.company.errors %}
+                  <span>{{error}}</span>
+              {% endfor %}
+              
+            </div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">{{form.mobile.label}}</label>
+            {{form.mobile}}
+            <div class="text-danger">
+              {% for error in form.mobile.errors %}
+                  <span>{{error}}</span>
+              {% endfor %}
+              
+            </div>
+          </div>
+          <div class="mb-3 text-center mt-5">
+            <button type="submit" class="btn btn-outline-success"><i class="bi bi-person-add"></i> New Contact</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    
+  </div>
+{% endblock %}
+
+```
+### update_contact
+```
+{% extends 'layout.html' %}
+
+{% block title %}
+  {{title}}
+{% endblock %}
+
+{% block content %}
+  <div class="container mt-4">
+    <h3>{{title}}</h3>
+    <hr>
+    
+    <div class="card mt-3 mb-4">
+      <div class="card-header bg-success text-center text-light">
+        <h4>{{title}}</h4>
+      </div>
+      <div class="card-body">
+        <form method="post" novalidate>
+          {% csrf_token %}
+
+          <div class="mb-3">
+            <label class="form-label">{{form.firstname.label_tag}}</label>
+            {% if form.errors %}
+            {{form.firstname}}
+            <div class="text-danger">
+              {% for error in form.firstname.errors %}
+                <span>{{error}}</span>
+              {% endfor %}
+            </div>
+            
+            {% else %}
+            {{form.firstname}}
+            {% endif %}
+            
+            
+          </div>
+          <div class="mb-3">
+            <label class="form-label">{{form.lastname.label_tag}}</label>
+            {{form.lastname}}
+            <div class="text-danger">
+              {% for error in form.lastname.errors %}
+                  <span>{{error}}</span>
+              {% endfor %}
+              
+            </div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">{{form.company.label_tag}}</label>
+            {{form.company}}
+            <div class="text-danger">
+              {% for error in form.company.errors %}
+                  <span>{{error}}</span>
+              {% endfor %}
+              
+            </div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">{{form.mobile.label_tag}}</label>
+            {{form.mobile}}
+            <div class="text-danger">
+              {% for error in form.mobile.errors %}
+                  <span>{{error}}</span>
+              {% endfor %}
+              
+            </div>
+          </div>
+          <div class="mb-3 text-center mt-5">
+            <button type="submit" class="btn btn-outline-primary"><i class="bi bi-pencil-square"></i> Update Contact</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    
+  </div>
+{% endblock %}
+
+```
