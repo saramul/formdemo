@@ -113,7 +113,7 @@ def delete_contact(request, id):
 
   return redirect(to='contactapp:show_all')
   ```
-  ###urls
+  ### urls
   ```
   from django.urls import path
 from . import views
